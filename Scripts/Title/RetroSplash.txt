@@ -20,7 +20,10 @@ private alias 3 : SCARLETLOGO_FADETOBLACK
 private alias 4 : SCARLETLOGO_RETROLOCKOUT
 
 // Priority
-private alias 1 : PRIORITY_ACTIVE
+public alias 1 : PRIORITY_ACTIVE
+
+// Tracks
+private alias 5 : TRACK_GAMEOVER
 
 
 // ========================
@@ -52,6 +55,7 @@ event ObjectUpdate
 
 	case SCARLETLOGO_WAIT
 		object.timer++
+		PlaySfx(SfxName[Life], false)
 		if object.timer == 180
 			object.timer = 0
 			object.state = SCARLETLOGO_FADETOBLACK
@@ -71,27 +75,28 @@ event ObjectUpdate
 		break
 
 	case SCARLETLOGO_RETROLOCKOUT
-		// Dummy state
+		// Almost a dummy state
 		// There's not really anything that can be done in here
-		// Other than existing and, y'know...
+		// Other than playing the game over theme (which uh, don't take me wrong, but it's kind of sad)
+		PlayMusic(TRACK_GAMEOVER)
 		break
 		
 	end switch
 
-		// Add some checks if the player wants to skip the screen already
-		// This wasn't present in the code when Past Geared first coded it (as if it wasn't already obvious LOL)
-		CheckTouchRect(0, 0, screen.xsize, screen.ysize)
-		if checkResult > -1
-			object.state = SCARLETLOGO_FADETOBLACK
-		end if
+	// Add some checks if the player wants to skip the screen already
+	// This wasn't present in the code when Past Geared first coded it (as if it wasn't already obvious LOL)
+	CheckTouchRect(0, 0, screen.xsize, screen.ysize)
+	if checkResult > -1
+		object.state = SCARLETLOGO_FADETOBLACK
+	end if
 
-		if keyPress[0].start == true
-			object.state = SCARLETLOGO_FADETOBLACK
-		end if
+	if keyPress[0].start == true
+		object.state = SCARLETLOGO_FADETOBLACK
+	end if
 
-		if keyPress[0].buttonA == true
-			object.state = SCARLETLOGO_FADETOBLACK
-		end if
+	if keyPress[0].buttonA == true
+		object.state = SCARLETLOGO_FADETOBLACK
+	end if
 end event
 
 
@@ -121,7 +126,7 @@ event ObjectStartup
 
 	// Past Geared used v3's foreach method when he first coded this
 	// Now me (Future Geared) & Klash (Klashicola) have used the right type of foreach (in case, v4's foreach method) :D
-	foreach (0, arrayPos0, ALL_ENTITIES) // Normally i'd put a TypeName[Retro Logo] instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
+	foreach (0, arrayPos0, ALL_ENTITIES) // Normally i'd put a TypeName[Scarlet Engine Logo] (or smth like that) instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
 		LoadSpriteSheet("Title/RetroEngine.gif")
 		object.gfx1[arrayPos0] = object[arrayPos0].spriteSheet
 		// REMINDER FOR KLASH:
@@ -133,8 +138,7 @@ event ObjectStartup
 		object[arrayPos0].priority = PRIORITY_ACTIVE
 		object[arrayPos0].ixpos = 160
 		object[arrayPos0].iypos = 120
-		arrayPos0++
-	loop
+	next
 
 	// Used to be above the foreach, moved down to here for accuracy reasons
 	// This goes for both the spritesheets btw
