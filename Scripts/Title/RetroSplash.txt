@@ -9,6 +9,8 @@
 // ========================
 
 private alias object.value0 : object.timer // Past Geared used to call this "object.whatever" when it was clearly a timer :sob:
+private alias object.value1 : object.gfx1
+private alias object.value2 : object.gfx2
 
 // States
 private alias 0 : SCARLETLOGO_INITIALISE
@@ -54,24 +56,6 @@ event ObjectUpdate
 			object.timer = 0
 			object.state = SCARLETLOGO_FADETOBLACK
 		end if
-
-		// Add some checks if the player wants to skip the screen already
-		// This wasn't present in the code when Past Geared first coded it (as if it wasn't already obvious LOL)
-		CheckTouchRect(0, 0, screen.xsize, screen.ysize)
-		if checkResult == true
-			object.timer = 0
-			object.state = SCARLETLOGO_FADETOBLACK
-		end if
-
-		if keyPress[0].start == true
-			object.timer = 0
-			object.state = SCARLETLOGO_FADETOBLACK
-		end if
-
-		if keyPress[0].buttonA == true
-			object.timer = 0
-			object.state = SCARLETLOGO_FADETOBLACK
-		end if
 		break
 
 	case SCARLETLOGO_FADETOBLACK
@@ -93,6 +77,21 @@ event ObjectUpdate
 		break
 		
 	end switch
+
+		// Add some checks if the player wants to skip the screen already
+		// This wasn't present in the code when Past Geared first coded it (as if it wasn't already obvious LOL)
+		CheckTouchRect(0, 0, screen.xsize, screen.ysize)
+		if checkResult > -1
+			object.state = SCARLETLOGO_FADETOBLACK
+		end if
+
+		if keyPress[0].start == true
+			object.state = SCARLETLOGO_FADETOBLACK
+		end if
+
+		if keyPress[0].buttonA == true
+			object.state = SCARLETLOGO_FADETOBLACK
+		end if
 end event
 
 
