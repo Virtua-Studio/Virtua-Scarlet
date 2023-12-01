@@ -112,11 +112,11 @@ end event
 
 
 event ObjectStartup
-#platform: USE_SCARLET
-    LoadSpriteSheet("Title/RetroEngine.gif")
-#endplatform
 #platform: USE_DECOMP
     LoadSpriteSheet("Title/ErrorScreenV4.gif")
+#endplatform
+#platform: USE_SCARLET
+    LoadSpriteSheet("Title/RetroEngine.gif")
 #endplatform
 
 	// Past Geared used v3's foreach method when he first coded this
