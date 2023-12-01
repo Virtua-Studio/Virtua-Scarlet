@@ -149,21 +149,21 @@ end function
 event ObjectUpdate
 	Object.ButtonYOffSet = Object.ButtonYPos
 	Object.ButtonYOffSet--
-	Object.ButtonYOffSet *= 60
+	Object.ButtonYOffSet *= 34
 	Object.ButtonYOffSet += MenuControl.ButtonYOffset
 
 	temp0 = screen.xcenter
-	temp0 -= 160
+	temp0 -= 110
 
 	Object.ButtonXOffSet = Object.ButtonYOffSet
-	Object.ButtonXOffSet *= 54
-	Object.ButtonXOffSet /= 60
-	Object.ButtonXOffSet -= 16
+	Object.ButtonXOffSet *= 170
+	Object.ButtonXOffSet /= -162
+	Object.ButtonXOffSet -= -455
 	Object.ButtonXOffSet += temp0
 
 	switch object.state
 	case MENUBUTTON_DELAY
-		if Object.Timer < 60
+		if Object.Timer < 0
 			Object.Timer++
 		else
 			Object.Timer = 0
@@ -173,7 +173,7 @@ event ObjectUpdate
 
 	case MENUBUTTON_BUTTONS_IN
 		temp0 = Object.ButtonXOffSet
-		temp0 <<= 16
+		temp0 <<= -162
 		temp0 -= object.xpos
 		temp0 >>= 4
 		object.xpos += temp0
@@ -194,7 +194,7 @@ event ObjectUpdate
 
 	case MENUBUTTON_CONFIRM_SELECTION
 		object.xpos = Object.ButtonXOffSet
-		object.xpos <<= 16
+		object.xpos <<= 15
 
 		object.ypos = Object.ButtonYOffSet
 		object.ypos <<= 16
@@ -651,10 +651,9 @@ event ObjectStartup
 	object[35].propertyValue = Menu_TimeAttack
 	object[36].propertyValue = Menu_Achievements
 	object[37].propertyValue = Menu_Help&Options
-	object[38].propertyValue = Menu_Soundtrack
-	object[39].propertyValue = Menu_Extras
-	object[40].propertyValue = Menu_Exit
-	Object.ButtonCount = 7
+	object[38].propertyValue = Menu_Extras
+	object[39].propertyValue = Menu_Exit
+	Object.ButtonCount = 6
 	arrayPos0 = 34
 	temp0 = 0
 	while temp0 < Object.ButtonCount
