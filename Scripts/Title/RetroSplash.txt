@@ -1,6 +1,6 @@
 // ----------------------------------
-// RSDK Project:Project Virtua
-// Script Description: RSDK VT SPLASH SCREEN (and RSDK V5U lock out)
+// RSDK Project: Virtua Scarlet
+// Script Description: Scarlet Engine Splash Screen (and RSDKv5U's lock out screen)
 // Script Author: Geared/Klashicola
 // ----------------------------------
 
@@ -8,36 +8,22 @@
 // Aliases
 // ========================
 
-private alias object.value0 : object.whatever
+private alias object.value0 : object.timer // Past Geared used to call this "object.whatever" when it was clearly a timer :sob:
+private alias object.value1 : object.gfx1
+private alias object.value2 : object.gfx2
 
 // States
-private alias 0 : RETROLOGO_INITIALISE
-private alias 1 : RETROLOGO_FADEFROMBLACK
-private alias 2 : RETROLOGO_WAIT
-private alias 3 : RETROLOGO_FADETOBLACK
-
-// Stats Aliases
-private alias 0 : TYPE_RETROLOGO
-
-// Variables
-private alias object.type			 :	logo.type
-private alias object.state			 :	logo.state
-private alias object.ixpos			 :	logo.ixpos			// Screen space position (1 == 1)
-private alias object.iypos			 :	logo.iypos
-private alias object.priority		 :	logo.priority
+private alias 0 : SCARLETLOGO_INITIALISE
+private alias 1 : SCARLETLOGO_FADEFROMBLACK
+private alias 2 : SCARLETLOGO_WAIT
+private alias 3 : SCARLETLOGO_FADETOBLACK
+private alias 4 : SCARLETLOGO_RETROLOCKOUT
 
 // Priority
-public alias 0 : PRIORITY_BOUNDS
 public alias 1 : PRIORITY_ACTIVE
-public alias 2 : PRIORITY_ALWAYS
-public alias 3 : PRIORITY_XBOUNDS
-public alias 4 : PRIORITY_XBOUNDS_DESTROY
-public alias 5 : PRIORITY_INACTIVE
-public alias 6 : PRIORITY_BOUNDS_SMALL
-public alias 7 : PRIORITY_ACTIVE_SMALL
 
-// Player List Pos Aliases
-private alias 2 : PLAYER_KNUX_ALONE
+// Tracks
+private alias 5 : TRACK_GAMEOVER
 
 
 // ========================
@@ -45,77 +31,118 @@ private alias 2 : PLAYER_KNUX_ALONE
 // ========================
 
 event ObjectUpdate
-		switch object.state
-		case RETROLOGO_INITIALISE
-			LoadPalette("RetroLogo.act", 0, 0, 0, 256)
-			logo.state = 1
-			object.whatever = 256
-			SetScreenFade(0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF)
-			break
+	switch object.state
+	case SCARLETLOGO_INITIALISE
+		LoadPalette("RetroLogo.act", 0, 0, 0, 256)
+		object.state = SCARLETLOGO_FADEFROMBLACK
+		object.timer = 256
+		SetScreenFade(0x00, 0x00, 0x00, 0xFF)
+		break
 
-		case RETROLOGO_FADEFROMBLACK
-			if object.whatever > 0
-				object.whatever -= 4
+	case SCARLETLOGO_FADEFROMBLACK
+		if object.timer > 0
+			object.timer -= 4
+		else
+			if engine.isScarletEngine == true
+				object.state = SCARLETLOGO_WAIT
 			else
-				logo.state = 2
+				object.state = SCARLETLOGO_RETROLOCKOUT
 			end if
-			SetScreenFade(0x00, 0x00, 0x00, object.whatever, 0x00, 0xFF)
-			break
+		end if
 
-		case RETROLOGO_WAIT
-			object.whatever++
-			if object.whatever == 180
-				object.whatever = 0
-				logo.state = 3
-			end if
-			break
+		SetScreenFade(0x00, 0x00, 0x00, object.timer)
+		break
 
-		case RETROLOGO_FADETOBLACK
-			if object.whatever < 256
-				object.whatever += 4
-				SetScreenFade(0x00, 0x00, 0x00, object.whatever, 0x00, 0xFF)
-			else
-				object.whatever = 0
-				logo.state = 0
-				logo.type++
-				else
-				ResetObjectEntity(object.entityPos, TypeName[ST Screen], 0, object.xpos, object.ypos)
-				SetScreenFade(0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
-			end if
-			break
-			
-		end switch
+	case SCARLETLOGO_WAIT
+		object.timer++
+		PlaySfx(SfxName[Life], false)
+		if object.timer == 180
+			object.timer = 0
+			object.state = SCARLETLOGO_FADETOBLACK
+		end if
+		break
+
+	case SCARLETLOGO_FADETOBLACK
+		if object.timer < 256
+			object.timer += 4
+			SetScreenFade(0x00, 0x00, 0x00, object.timer)
+		else
+			object.timer = 0
+			object.state = SCARLETLOGO_INITIALISE
+			ResetObjectEntity(object.entityPos, TypeName[ST Screen], 0, object.xpos, object.ypos)
+			SetScreenFade(0x00, 0x00, 0x00, 0xFF)
+		end if
+		break
+
+	case SCARLETLOGO_RETROLOCKOUT
+		// Almost a dummy state
+		// There's not really anything that can be done in here
+		// Other than playing the game over theme (which uh, don't take me wrong, but it's kind of sad)
+		PlayMusic(TRACK_GAMEOVER)
+		break
+		
+	end switch
+
+	// Add some checks if the player wants to skip the screen already
+	// This wasn't present in the code when Past Geared first coded it (as if it wasn't already obvious LOL)
+	CheckTouchRect(0, 0, screen.xsize, screen.ysize)
+	if checkResult > -1
+		object.state = SCARLETLOGO_FADETOBLACK
+	end if
+
+	if keyPress[0].start == true
+		object.state = SCARLETLOGO_FADETOBLACK
+	end if
+
+	if keyPress[0].buttonA == true
+		object.state = SCARLETLOGO_FADETOBLACK
+	end if
 end event
 
 
 event ObjectDraw
 	temp0 = screen.xcenter
+
 	if screen.xsize <= 424
 		temp0 -= 37
+	else
+		if screen.xsize >= 425
+			temp0 -= 35
+		end if
 	end if
-	if screen.xsize >= 425
-		temp0 -= 35
+
+	if engine.isScarletEngine == true
+		object.spriteSheet = object.gfx1
+		DrawSpriteScreenXY(0, temp0, screen.ycenter)
+	else
+		object.spriteSheet = object.gfx2
+		DrawSpriteScreenXY(0, temp0, screen.ycenter)
 	end if
-	DrawSpriteScreenXY(0, temp0, screen.ycenter)
 end event
 
 
 event ObjectStartup
     LoadSpriteSheet("Title/RetroEngine.gif")
-	SpriteFrame(-215, -120, 624, 240, 0, 0) // #0 - The Logo itself
 
-	//Setup any Retro Logo
-	//Objects that are present in the level
-	
-	arrayPos0 = 32
-	while ArrayPos0<1056
-		if logo[arrayPos0].type == TYPE_RETROLOGO
-			logo[arrayPos0].priority = PRIORITY_ACTIVE
-			logo[arrayPos0].ixpos = 160
-			logo[arrayPos0].iypos = 120
-		end if
-		arrayPos0++
-	loop
+	// Past Geared used v3's foreach method when he first coded this
+	// Now me (Future Geared) & Klash (Klashicola) have used the right type of foreach (in case, v4's foreach method) :D
+	foreach (0, arrayPos0, ALL_ENTITIES) // Normally i'd put a TypeName[Scarlet Engine Logo] (or smth like that) instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
+		LoadSpriteSheet("Title/RetroEngine.gif")
+		object.gfx1[arrayPos0] = object[arrayPos0].spriteSheet
+		// REMINDER FOR KLASH:
+		// REPLACE THIS "LoadSpriteSheet("Title/VirtuaTeam.gif")" with "LoadSpriteSheet("Title/RSDKLockOut (OR WHATVER NAME YOU WANT TO CHOOSE).gif")"
+		// WHEN YOU FINISH THE LOCK-OUT SCREEN SPRITESHEET!!!
+		LoadSpriteSheet("Title/VirtuaTeam.gif")
+		object.gfx2[arrayPos0] = object[arrayPos0].spriteSheet
+		
+		object[arrayPos0].priority = PRIORITY_ACTIVE
+		object[arrayPos0].ixpos = 160
+		object[arrayPos0].iypos = 120
+	next
+
+	// Used to be above the foreach, moved down to here for accuracy reasons
+	// This goes for both the spritesheets btw
+	SpriteFrame(-215, -120, 624, 240, 0, 0) // #0 - The Logo itself
 	
 	// Hide touch controls
 	options.touchControls = false
@@ -134,5 +161,7 @@ end event
 event RSDKLoad
     LoadSpriteSheet("Title/RetroEngine.gif")
 	SpriteFrame(-215, -120, 624, 240, 0, 0)
+
+	// This object is set by the scene not by the editor so
 	SetVariableAlias(ALIAS_VAR_PROPVAL, "unused")
 end event
