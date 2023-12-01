@@ -9,8 +9,6 @@
 // ========================
 
 private alias object.value0 : object.timer // Past Geared used to call this "object.whatever" when it was clearly a timer :sob:
-private alias object.value1 : object.gfx1
-private alias object.value2 : object.gfx2
 
 // States
 private alias 0 : SCARLETLOGO_INITIALISE
@@ -21,9 +19,6 @@ private alias 4 : SCARLETLOGO_RETROLOCKOUT
 
 // Priority
 public alias 1 : PRIORITY_ACTIVE
-
-// Tracks
-private alias 5 : TRACK_GAMEOVER
 
 
 // ========================
@@ -77,8 +72,7 @@ event ObjectUpdate
 	case SCARLETLOGO_RETROLOCKOUT
 		// Almost a dummy state
 		// There's not really anything that can be done in here
-		// Other than playing the game over theme (which uh, don't take me wrong, but it's kind of sad)
-		PlayMusic(TRACK_GAMEOVER)
+		// Other than existing with those 3 lines of comment...
 		break
 		
 	end switch
@@ -113,27 +107,21 @@ event ObjectDraw
 		end if
 	end if
 
-	if object.state != SCARLETLOGO_RETROLOCKOUT
-		object.spriteSheet = object.gfx1
-		DrawSpriteScreenXY(0, temp0, screen.ycenter)
-	else
-		object.spriteSheet = object.gfx2
-		DrawSpriteScreenXY(0, temp0, screen.ycenter)
-	end if
+	DrawSpriteScreenXY(0, temp0, screen.ycenter)
 end event
 
 
 event ObjectStartup
+#platform: USE_SCARLET
     LoadSpriteSheet("Title/RetroEngine.gif")
+#endplatform
+#platform: USE_DECOMP
+    LoadSpriteSheet("Title/ErrorScreenV4.gif")
+#endplatform
 
 	// Past Geared used v3's foreach method when he first coded this
 	// Now me (Future Geared) & Klash (Klashicola) have used the right type of foreach (in case, v4's foreach method) :D
 	foreach (0, arrayPos0, ALL_ENTITIES) // Normally i'd put a TypeName[Scarlet Engine Logo] (or smth like that) instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
-		LoadSpriteSheet("Title/RetroEngine.gif")
-		object[arrayPos0].gfx1 = object[arrayPos0].spriteSheet
-		LoadSpriteSheet("Title/ErrorScreenV4.gif")
-		object[arrayPos0].gfx2 = object[arrayPos0].spriteSheet
-		
 		object[arrayPos0].priority = PRIORITY_ACTIVE
 		object[arrayPos0].ixpos = 160
 		object[arrayPos0].iypos = 120
