@@ -55,7 +55,6 @@ event ObjectUpdate
 
 	case SCARLETLOGO_WAIT
 		object.timer++
-		PlaySfx(SfxName[Life], false)
 		if object.timer == 180
 			object.timer = 0
 			object.state = SCARLETLOGO_FADETOBLACK
@@ -132,7 +131,7 @@ event ObjectStartup
 		// REMINDER FOR KLASH:
 		// REPLACE THIS "LoadSpriteSheet("Title/VirtuaTeam.gif")" with "LoadSpriteSheet("Title/RSDKLockOut (OR WHATVER NAME YOU WANT TO CHOOSE).gif")"
 		// WHEN YOU FINISH THE LOCK-OUT SCREEN SPRITESHEET!!!
-		LoadSpriteSheet("Title/VirtuaTeam.gif")
+		LoadSpriteSheet("Title/ErrorScreenV4.gif")
 		object.gfx2[arrayPos0] = object[arrayPos0].spriteSheet
 		
 		object[arrayPos0].priority = PRIORITY_ACTIVE
