@@ -1,7 +1,7 @@
 // ----------------------------------
 // RSDK Project: Virtua Scarlet
-// Script Description: Scarlet Engine Splash Screen (and RSDKv5U's lock out screen)
-// Script Author: Geared/Klashicola
+// Script Description: Scarlet Engine Splash Screen (and Retro Engine's lock out screen)
+// Script Author: Klashicola/Geared
 // ----------------------------------
 
 // ========================
@@ -43,7 +43,7 @@ event ObjectUpdate
 		if object.timer > 0
 			object.timer -= 4
 		else
-			if engine.isScarletEngine == true
+			if engine.standalone == 2
 				object.state = SCARLETLOGO_WAIT
 			else
 				object.state = SCARLETLOGO_RETROLOCKOUT
@@ -110,7 +110,7 @@ event ObjectDraw
 		end if
 	end if
 
-	if engine.isScarletEngine == true
+	if engine.standalone == 2
 		object.spriteSheet = object.gfx1
 		DrawSpriteScreenXY(0, temp0, screen.ycenter)
 	else
@@ -128,10 +128,7 @@ event ObjectStartup
 	foreach (0, arrayPos0, ALL_ENTITIES) // Normally i'd put a TypeName[Scarlet Engine Logo] (or smth like that) instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
 		LoadSpriteSheet("Title/RetroEngine.gif")
 		object.gfx1[arrayPos0] = object[arrayPos0].spriteSheet
-		// REMINDER FOR KLASH:
-		// REPLACE THIS "LoadSpriteSheet("Title/VirtuaTeam.gif")" with "LoadSpriteSheet("Title/RSDKLockOut (OR WHATVER NAME YOU WANT TO CHOOSE).gif")"
-		// WHEN YOU FINISH THE LOCK-OUT SCREEN SPRITESHEET!!!
-		LoadSpriteSheet("Title/ErrorScreenV4.gif")
+LoadSpriteSheet("Title/ErrorScreenV4.gif")
 		object.gfx2[arrayPos0] = object[arrayPos0].spriteSheet
 		
 		object[arrayPos0].priority = PRIORITY_ACTIVE
