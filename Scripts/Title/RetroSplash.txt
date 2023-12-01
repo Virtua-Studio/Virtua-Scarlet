@@ -43,11 +43,12 @@ event ObjectUpdate
 		if object.timer > 0
 			object.timer -= 4
 		else
-			if engine.standalone == 2
-				object.state = SCARLETLOGO_WAIT
-			else
-				object.state = SCARLETLOGO_RETROLOCKOUT
-			end if
+#platform: USE_SCARLET
+			object.state = SCARLETLOGO_WAIT
+#endplatform
+#platform: USE_DECOMP
+			object.state = SCARLETLOGO_RETROLOCKOUT
+#endplatform
 		end if
 
 		SetScreenFade(0x00, 0x00, 0x00, object.timer)
@@ -82,6 +83,7 @@ event ObjectUpdate
 		
 	end switch
 
+#platform: USE_SCARLET
 	// Add some checks if the player wants to skip the screen already
 	// This wasn't present in the code when Past Geared first coded it (as if it wasn't already obvious LOL)
 	CheckTouchRect(0, 0, screen.xsize, screen.ysize)
@@ -96,6 +98,7 @@ event ObjectUpdate
 	if keyPress[0].buttonA == true
 		object.state = SCARLETLOGO_FADETOBLACK
 	end if
+#endplatform
 end event
 
 
@@ -110,7 +113,7 @@ event ObjectDraw
 		end if
 	end if
 
-	if engine.standalone == 2
+	if object.state != SCARLETLOGO_RETROLOCKOUT
 		object.spriteSheet = object.gfx1
 		DrawSpriteScreenXY(0, temp0, screen.ycenter)
 	else
@@ -127,9 +130,9 @@ event ObjectStartup
 	// Now me (Future Geared) & Klash (Klashicola) have used the right type of foreach (in case, v4's foreach method) :D
 	foreach (0, arrayPos0, ALL_ENTITIES) // Normally i'd put a TypeName[Scarlet Engine Logo] (or smth like that) instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
 		LoadSpriteSheet("Title/RetroEngine.gif")
-		object.gfx1[arrayPos0] = object[arrayPos0].spriteSheet
-LoadSpriteSheet("Title/ErrorScreenV4.gif")
-		object.gfx2[arrayPos0] = object[arrayPos0].spriteSheet
+		object[arrayPos0].gfx1 = object[arrayPos0].spriteSheet
+		LoadSpriteSheet("Title/ErrorScreenV4.gif")
+		object[arrayPos0].gfx2 = object[arrayPos0].spriteSheet
 		
 		object[arrayPos0].priority = PRIORITY_ACTIVE
 		object[arrayPos0].ixpos = 160
