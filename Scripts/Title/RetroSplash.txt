@@ -1,6 +1,6 @@
 // ----------------------------------
 // RSDK Project: Virtua Scarlet
-// Script Description: Scarlet Engine Splash Screen (and Retro Engine's lock out screen)
+// Script Description: Splash/Lock-out Screen Object
 // Script Author: Klashicola/Geared
 // ----------------------------------
 
@@ -15,7 +15,6 @@ private alias 0 : SCARLETLOGO_INITIALISE
 private alias 1 : SCARLETLOGO_FADEFROMBLACK
 private alias 2 : SCARLETLOGO_WAIT
 private alias 3 : SCARLETLOGO_FADETOBLACK
-private alias 4 : SCARLETLOGO_RETROLOCKOUT
 
 // Priority
 public alias 1 : PRIORITY_ACTIVE
@@ -38,23 +37,20 @@ event ObjectUpdate
 		if object.timer > 0
 			object.timer -= 4
 		else
-#platform: USE_SCARLET
 			object.state = SCARLETLOGO_WAIT
-#endplatform
-#platform: USE_DECOMP
-			object.state = SCARLETLOGO_RETROLOCKOUT
-#endplatform
 		end if
 
 		SetScreenFade(0x00, 0x00, 0x00, object.timer)
 		break
 
 	case SCARLETLOGO_WAIT
+#platform: USE_SCARLET
 		object.timer++
 		if object.timer == 180
 			object.timer = 0
 			object.state = SCARLETLOGO_FADETOBLACK
 		end if
+#endplatform
 		break
 
 	case SCARLETLOGO_FADETOBLACK
@@ -68,18 +64,12 @@ event ObjectUpdate
 			SetScreenFade(0x00, 0x00, 0x00, 0xFF)
 		end if
 		break
-
-	case SCARLETLOGO_RETROLOCKOUT
-		// Almost a dummy state
-		// There's not really anything that can be done in here
-		// Other than existing with those 3 lines of comment...
-		break
 		
 	end switch
 
 #platform: USE_SCARLET
 	// Add some checks if the player wants to skip the screen already
-	// This wasn't present in the code when Past Geared first coded it (as if it wasn't already obvious LOL)
+	// This wasn't present in the original code of when Past Geared first coded it (as if it wasn't already obvious LOL)
 	CheckTouchRect(0, 0, screen.xsize, screen.ysize)
 	if checkResult > -1
 		object.state = SCARLETLOGO_FADETOBLACK
@@ -112,24 +102,19 @@ end event
 
 
 event ObjectStartup
-#platform: USE_DECOMP
     LoadSpriteSheet("Title/ErrorScreenV4.gif")
-#endplatform
 #platform: USE_SCARLET
     LoadSpriteSheet("Title/RetroEngine.gif")
 #endplatform
+	SpriteFrame(-215, -120, 624, 240, 0, 0) // #0 - Scarlet Engine's Splash Screen
 
 	// Past Geared used v3's foreach method when he first coded this
 	// Now me (Future Geared) & Klash (Klashicola) have used the right type of foreach (in case, v4's foreach method) :D
-	foreach (0, arrayPos0, ALL_ENTITIES) // Normally i'd put a TypeName[Scarlet Engine Logo] (or smth like that) instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
+	foreach (0, arrayPos0, ALL_ENTITIES) // Normally there would be a TypeName[Splash Lockout Screen] instead of the 0 in there, but considering the possibility of it not being a type in the scene config, we have to work-around with it like this =/
 		object[arrayPos0].priority = PRIORITY_ACTIVE
 		object[arrayPos0].ixpos = 160
 		object[arrayPos0].iypos = 120
 	next
-
-	// Used to be above the foreach, moved down to here for accuracy reasons
-	// This goes for both the spritesheets btw
-	SpriteFrame(-215, -120, 624, 240, 0, 0) // #0 - The Logo itself
 	
 	// Hide touch controls
 	options.touchControls = false

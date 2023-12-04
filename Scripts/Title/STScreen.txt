@@ -67,14 +67,17 @@ event ObjectUpdate
 	CheckTouchRect(0, 0, screen.xsize, screen.ysize)
 	if checkResult > -1
 		object.state = VIRTUATEAMLOGO_FADETOBLACK
+		StopSfx(SfxName[VT])
 	end if
 
 	if keyPress[0].start == true
 		object.state = VIRTUATEAMLOGO_FADETOBLACK
+		StopSfx(SfxName[VT])
 	end if
 
 	if keyPress[0].buttonA == true
 		object.state = VIRTUATEAMLOGO_FADETOBLACK
+		StopSfx(SfxName[VT])
 	end if
 end event
 
@@ -96,9 +99,9 @@ end event
 
 event ObjectStartup
     LoadSpriteSheet("Title/VirtuaTeam.gif")
-	SpriteFrame(-215, -120, 500, 240, 0, 0) // #0 - The Logo itself
+	SpriteFrame(-215, -120, 500, 240, 0, 0) // #0 - Virtua Team's Logo
 
-	foreach (0, arrayPos0, ALL_ENTITIES)  // Normally i'd put a TypeName[Virtua Team Logo] instead of the 0 in there, but considering the possibility of it not being a type in the scene, we have to work-around with it =/
+	foreach (0, arrayPos0, ALL_ENTITIES)  // Normally i'd put a TypeName[Virtua Team Logo] instead of the 0 in there, but considering the possibility of it not being a type in the scene config, we have to work-around with it like this =/
 		object[arrayPos0].priority = PRIORITY_ACTIVE
 		object[arrayPos0].ixpos = 160
 		object[arrayPos0].iypos = 120
