@@ -1,8 +1,7 @@
 // ----------------------------------
-// RSDK Project: RSDK-GDT 
-// Script Description: CD Menu Button
-// Script Author: Christian Whitehead adapted with the RSDK Script Converter to v4 and with manual modifications by Zero242
-// Original v3/CD Script Unpacked by Rubberduckycooly's script unpacker
+// RSDK Project: Virtua Scarlet
+// Script Description: Menu Button
+// Script Author: Klashicola/Geared
 // ----------------------------------
 
 // Aliases
@@ -173,7 +172,7 @@ event ObjectUpdate
 
 	case MENUBUTTON_BUTTONS_IN
 		temp0 = Object.ButtonXOffSet
-		temp0 <<= -162
+		temp0 <<= 15
 		temp0 -= object.xpos
 		temp0 >>= 4
 		object.xpos += temp0
@@ -429,8 +428,6 @@ event ObjectUpdate
 					object.state = MENUBUTTON_CONFIRM_SELECTION
 
 					MenuControl.State = MENUCONTROL_CONTROLS
-// WARNING: Function FUNC_ENGINECALLBACK does not exist in RSDKv4!
-// Arguments: CALLBACK_FULL_VERSION_ONLY
 					MenuControl.CurrentDrag = 0
 				end if
 				break
@@ -502,9 +499,6 @@ event ObjectUpdate
 				ResetObjectEntity(66, TypeName[Blank Object], 0, 0, 0)
 
 			case Menu_Soundtrack
-				//object.state = MENUBUTTON_BLANK
-				//MenuControl.State = MENUCONTROL_ENTER_LEVELSELECT
-				//MenuControl.Fade = 0
 				MenuHeading.State = MENUHEADING_LEAVE_SCREEN
 				MenuHeading.Header = SOUNDTRACK_HEADER
 
@@ -558,7 +552,7 @@ event ObjectUpdate
 		end if
 		break
 
-	case MENUBUTTON_RESET //Used by MenuWindow
+	case MENUBUTTON_RESET // Used by MenuWindow
 		if object.propertyValue >= Menu_Extras
 			if PrevMenuButton.State == MENUBUTTON_CONFIRM_SELECTION
 				object.state = MENUBUTTON_CONFIRM_SELECTION
