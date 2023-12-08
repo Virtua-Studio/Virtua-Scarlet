@@ -9,6 +9,7 @@
 // ========================
 
 private alias object.value0 : object.timer
+private alias object.value1 : object.timer2
 
 // States
 private alias 0 : VIRTUATEAMLOGO_INITIALISE
@@ -24,7 +25,6 @@ private alias 3 : VIRTUATEAMLOGO_FADETOBLACK
 event ObjectUpdate
 	switch object.state
 	case VIRTUATEAMLOGO_INITIALISE
-		LoadPalette("VSS.act", 0, 0, 0, 256)
 		object.state = VIRTUATEAMLOGO_FADEFROMBLACK
 		PlaySfx(SfxName[VT], false)
 		object.timer = 256
@@ -32,6 +32,7 @@ event ObjectUpdate
 		break
 	
 	case VIRTUATEAMLOGO_FADEFROMBLACK
+		LoadPalette("VSS.act", 0, 0, 0, 257)
 		if object.timer > 0
 			object.timer -= 4
 		else
@@ -93,7 +94,9 @@ event ObjectDraw
 		end if
 	end if
 
-	DrawSpriteScreenXY(0, temp0, screen.ycenter)
+	if object.timer2 >= 2
+		DrawSpriteScreenXY(0, temp0, screen.ycenter)
+	end if
 end event
 
 
@@ -101,7 +104,7 @@ event ObjectStartup
     LoadSpriteSheet("Title/VirtuaTeam.gif")
 	SpriteFrame(-215, -120, 500, 240, 0, 0) // #0 - Virtua Team's Logo
 
-	foreach (0, arrayPos0, ALL_ENTITIES)  // Normally i'd put a TypeName[Virtua Team Logo] instead of the 0 in there, but considering the possibility of it not being a type in the scene config, we have to work-around with it like this =/
+	foreach (TypeName[ST Screen], arrayPos0, ALL_ENTITIES)
 		object[arrayPos0].priority = PRIORITY_ACTIVE
 		object[arrayPos0].ixpos = 160
 		object[arrayPos0].iypos = 120
