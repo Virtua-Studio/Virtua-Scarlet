@@ -29,6 +29,7 @@ event ObjectUpdate
 		PlaySfx(SfxName[VT], false)
 		object.timer = 256
 		SetScreenFade(0x00, 0x00, 0x00, 0x00)
+		object.timer2++
 		break
 	
 	case VIRTUATEAMLOGO_FADEFROMBLACK
@@ -40,6 +41,7 @@ event ObjectUpdate
 		end if
 
 		SetScreenFade(0x00, 0x00, 0x00, object.timer)
+		object.timer2++
 		break
 	
 	case VIRTUATEAMLOGO_WAIT
