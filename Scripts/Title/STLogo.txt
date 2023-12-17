@@ -9,9 +9,6 @@
 // ========================
 
 private alias object.value0 : object.timer
-// value1 & value2 are unused
-private alias object.value3 : object.levelSelectCheatPos
-private alias object.value4 : object.regionSwitchCheatPos
 
 // States
 private alias 0  : LOGO_SETUP
@@ -20,9 +17,6 @@ private alias 2  : LOGO_STARTMUSIC
 private alias 3  : LOGO_SHOWSONICTAILS
 private alias 4  : LOGO_SHOWBG
 private alias 5  : LOGO_FINISHEDANIMATING
-
-// Soundtrack
-private alias 0  : OST_CURRENT
 
 
 // ========================
@@ -150,12 +144,7 @@ end event
 
 event ObjectStartup
 	LoadSpriteSheet("Title/Title.gif")
-	Options.Soundtrack = saveRAM[38]
-	if Options.Soundtrack == OST_CURRENT
-		SetMusicTrack("titlescreen.ogg", 0, false)
-	else
-		SetMusicTrack("TitlescreenSAGE.ogg", 0, false)
-	end if
+	SetMusicTrack("titlescreen.ogg", 0, false)
 
 	arrayPos0 = 0x100
 	while arrayPos0 < 0x240

@@ -16,6 +16,7 @@ private alias  0 : START_AWAITACTION
 private alias  1 : START_GOTO_MENU
 
 // Presentation Stages
+private alias 0 : STAGE_P_TITLE
 private alias 3 : STAGE_P_MENU
 
 
@@ -51,7 +52,8 @@ event ObjectUpdate
 		else
 			object.attractTimer++
 			if object.attractTimer == 1620
-				// LoadVideo("Opening") - This is for when Scarlet Engine's video playback is functional. Do NOT remove it!
+				LoadVideo("Opening") // It's your time to shine, Scarlet Engine!
+				stage.listPos = STAGE_P_TITLE
 			end if
 		end if
 		break
@@ -59,7 +61,7 @@ event ObjectUpdate
 	case START_GOTO_MENU
 		object.timer += 8
 		if object.timer == 320
-			Stage.ListPos = STAGE_P_MENU
+			stage.listPos = STAGE_P_MENU
 			LoadStage()
 		end if
 		SetScreenFade(0x00, 0x00, 0x00, object.timer)
