@@ -52,8 +52,7 @@ event ObjectUpdate
 		else
 			object.attractTimer++
 			if object.attractTimer == 1620
-				LoadVideo("Opening") // It's your time to shine, Scarlet Engine!
-				stage.listPos = STAGE_P_TITLE
+				LoadVideo("Opening")
 			end if
 		end if
 		break
@@ -61,6 +60,7 @@ event ObjectUpdate
 	case START_GOTO_MENU
 		object.timer += 8
 		if object.timer == 320
+			LoadVideo("Opening") // Yeah, it is hers too for a reason, if you didn't know
 			stage.listPos = STAGE_P_MENU
 			LoadStage()
 		end if

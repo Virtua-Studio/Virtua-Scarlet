@@ -14,7 +14,7 @@ private alias object.value0 : object.timer
 private alias 0  : LOGO_SETUP
 private alias 1  : LOGO_FADEIN
 private alias 2  : LOGO_STARTMUSIC
-private alias 3  : LOGO_SHOWSONICTAILS
+private alias 3  : LOGO_SETUPBG
 private alias 4  : LOGO_SHOWBG
 private alias 5  : LOGO_FINISHEDANIMATING
 
@@ -24,8 +24,6 @@ private alias 5  : LOGO_FINISHEDANIMATING
 // ========================
 
 event ObjectUpdate
-	LoadPalette("title.act", 0, 0, 0, 256)
-	
 	switch object.state
 	case LOGO_SETUP
 		if object.timer < 10
@@ -34,6 +32,7 @@ event ObjectUpdate
 			object.timer = 0
 			object.alpha = 0x100
 			object.state++
+			LoadPalette("title.act", 0, 0, 0, 256)
 		end if
 		break
 
@@ -55,7 +54,7 @@ event ObjectUpdate
 		end if
 		break
 
-	case LOGO_SHOWSONICTAILS
+	case LOGO_SETUPBG
 		if object.timer < 40
 			object.timer++
 		else
@@ -108,11 +107,11 @@ event ObjectDraw
 		DrawRect(0, 0, screen.xsize, screen.ysize, 0x00, 0x00, 0x00, object.alpha)
 		break
 
-	case LOGO_SHOWEMBLEM
+	case LOGO_STARTMUSIC
 		ClearScreen(1)
 		break
 
-	case LOGO_SHOWSONICTAILS
+	case LOGO_SETUPBG
 		ClearScreen(1)
 		break
 
