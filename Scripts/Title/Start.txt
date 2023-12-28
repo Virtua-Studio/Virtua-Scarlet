@@ -60,7 +60,7 @@ event ObjectUpdate
 	case START_GOTO_MENU
 		object.timer += 8
 		if object.timer == 320
-			LoadVideo("Opening") // Yeah, it is hers too for a reason, if you didn't know
+			LoadVideo("Opening")
 			stage.listPos = STAGE_P_MENU
 			LoadStage()
 		end if
