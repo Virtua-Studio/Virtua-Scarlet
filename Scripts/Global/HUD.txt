@@ -566,20 +566,20 @@ event ObjectStartup
 	LoadSpriteSheet("Global/Display.gif")
 
 	// HUD frames
-	SpriteFrame(0, 0, 8, 11, 1, 50) 	// #0  - Number 0
-	SpriteFrame(0, 0, 8, 11, 10, 50) 	// #1  - Number 1
-	SpriteFrame(0, 0, 8, 11, 19, 50) 	// #2  - Number 2
-	SpriteFrame(0, 0, 8, 11, 28, 50) 	// #3  - Number 3
-	SpriteFrame(0, 0, 8, 11, 1, 62) 	// #4  - Number 4
-	SpriteFrame(0, 0, 8, 11, 10, 62) 	// #5  - Number 5
-	SpriteFrame(0, 0, 8, 11, 19, 62) 	// #6  - Number 6
-	SpriteFrame(0, 0, 8, 11, 28, 62) 	// #7  - Number 7
-	SpriteFrame(0, 0, 8, 11, 1, 74) 	// #8  - Number 8
-	SpriteFrame(0, 0, 8, 11, 10, 74) 	// #9  - Number 9
+	SpriteFrame(0, 0, 9, 13, 307, 147) 	// #0  - Number 0
+	SpriteFrame(0, 0, 9, 13, 317, 147) 	// #1  - Number 1
+	SpriteFrame(0, 0, 9, 13, 327, 147) 	// #2  - Number 2
+	SpriteFrame(0, 0, 9, 13, 337, 147)// #3  - Number 3
+	SpriteFrame(0, 0, 9, 13, 347, 147) 	// #4  - Number 4
+	SpriteFrame(0, 0, 9, 13, 357, 147)// #5  - Number 5
+	SpriteFrame(0, 0, 9, 13, 367, 147)	// #6  - Number 6
+	SpriteFrame(0, 0, 9, 13, 377, 147) 	// #7  - Number 7
+	SpriteFrame(0, 0, 9, 13, 387, 147)	// #8  - Number 8
+	SpriteFrame(0, 0, 9, 13, 397, 147)	// #9  - Number 9
 	
 	// A-F digits are unused
 	
-	SpriteFrame(0, 0, 40, 43, 1, 1) 	// #10 - Score, Time, Rings HUD text
+	SpriteFrame(0, 0, 46, 49, 248, 147) 	// #10 - Score, Time, Rings HUD text
 	SpriteFrame(0, 0, 31, 11, 1, 119) 	// #11 - Red Time text
 	SpriteFrame(0, 0, 39, 11, 1, 131) 	// #12 - Red Rings text
 	SpriteFrame(0, 0, 29, 4, 1, 45) 	// #13 - Timer ticks
