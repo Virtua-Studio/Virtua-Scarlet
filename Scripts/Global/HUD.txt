@@ -566,16 +566,16 @@ event ObjectStartup
 	LoadSpriteSheet("Global/Display.gif")
 
 	// HUD frames
-	SpriteFrame(0, 0, 9, 13, 307, 147) 	// #0  - Number 0
-	SpriteFrame(0, 0, 9, 13, 317, 147) 	// #1  - Number 1
-	SpriteFrame(0, 0, 9, 13, 327, 147) 	// #2  - Number 2
-	SpriteFrame(0, 0, 9, 13, 337, 147)// #3  - Number 3
-	SpriteFrame(0, 0, 9, 13, 347, 147) 	// #4  - Number 4
-	SpriteFrame(0, 0, 9, 13, 357, 147)// #5  - Number 5
-	SpriteFrame(0, 0, 9, 13, 367, 147)	// #6  - Number 6
-	SpriteFrame(0, 0, 9, 13, 377, 147) 	// #7  - Number 7
-	SpriteFrame(0, 0, 9, 13, 387, 147)	// #8  - Number 8
-	SpriteFrame(0, 0, 9, 13, 397, 147)	// #9  - Number 9
+	SpriteFrame(0, 0, 9, 14, 307, 147) 	// #0  - Number 0
+	SpriteFrame(0, 0, 9, 14, 317, 147) 	// #1  - Number 1
+	SpriteFrame(0, 0, 9, 14, 327, 147) 	// #2  - Number 2
+	SpriteFrame(0, 0, 9, 14, 337, 147)// #3  - Number 3
+	SpriteFrame(0, 0, 9, 14, 347, 147) 	// #4  - Number 4
+	SpriteFrame(0, 0, 9, 14, 357, 147)// #5  - Number 5
+	SpriteFrame(0, 0, 9, 14, 367, 147)	// #6  - Number 6
+	SpriteFrame(0, 0, 9, 14, 377, 147) 	// #7  - Number 7
+	SpriteFrame(0, 0, 9, 14, 387, 147)	// #8  - Number 8
+	SpriteFrame(0, 0, 9, 14, 397, 147)	// #9  - Number 9
 	
 	// A-F digits are unused
 	
