@@ -19,8 +19,8 @@
     #endregion Music
 
     #region setup   
-        $SpriteSheet = "Global/Display.gif"
-        $EditorAtribute = "unused"
+        $SpriteSheet = '"Global/Display.gif"'
+        $EditorAtribute = '"unused"'
         $Aliases = 0
         $FileName = ".\$StageName" + "Setup.txt"
     #endregion setup
