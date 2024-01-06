@@ -84,7 +84,7 @@ event ObjectUpdate
 
 	case MENUCONTROL_CONTROLS
 		CheckEqual(options.physicalControls, true)
-		// There's a reason of why we're forcing options.physicalControls here first, aso the other platforms can override it
+		// There's a reason of why we're forcing options.physicalControls here first, so the other platforms can override it
 		if checkResult == true
 			if keyPress[0].up == true
 				object.currentSelection--
