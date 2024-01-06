@@ -375,6 +375,7 @@ public value Player_attractTablePos 	= 0
 public value Player_attractTableSize 	= 0
 public value Player_attractFrameCount 	= 0
 public value Player_attractDuration 	= 0
+public value Player_coyoteTime 	= 0
 // All these below are unused
 private value Player_unusedValue1 = 0
 private value Player_unusedValue2 = 0
@@ -3562,6 +3563,22 @@ public function Player_State_Air
 	if player.gravity == GRAVITY_AIR
 		CallFunction(Player_HandleAirMovement)
 
+		// Coyote Time's code
+		// this code still has some little bugs ingame
+		// like you being able to jump after gravity kicks in when going up in a slope or something (not the best explanation, for sure, but it's the best way i can explain)
+		// though they should be easy to fix with some more code (code which i do not know what is it LMAO)
+		// but other than that the coyote time is pretty functional and works as expected, any help to fix those bugs would be very appreciated!!
+		if player.yvel >= 0
+			if Player_coyoteTime <= 18 // approximately 0.3 seconds, you gotta be fast to do this!...unless you're a cheater-ass and edit the code to have more time than only this...
+				Player_coyoteTime++
+				if player.jumpPress == true
+					if player.jumpAbilityState == 0 // jump ability state so the player doesn't goes spam mode with it
+						CallFunction(Player_Action_Jump)
+					end if
+				end if
+			end if
+		end if
+
 		if player.yvel > 0x20000
 			if player.animation == ANI_FLAILING1
 				player.animation = ANI_WALKING
@@ -5592,6 +5609,7 @@ event ObjectUpdate
 		else
 			if player.gravity == GRAVITY_GROUND
 				player.jumpAbilityState = 0
+				Player_coyoteTime = 0
 			end if
 
 			CallFunction(player.state)
@@ -5694,6 +5712,7 @@ event ObjectUpdate
 
 		if player.gravity == GRAVITY_GROUND
 			player.jumpAbilityState = 0
+			Player_coyoteTime = 0
 		end if
 
 		CallFunction(player.state)
@@ -5955,10 +5974,11 @@ event ObjectStartup
 			//this part was added for knux and tails because before, if you pressed up and jump playing with one of them, they just keeped looking up because they did not had a Peelout action check
 			player[SLOT_PLAYER1].actionPeelout = Player_Action_Jump
 			
-			// Note this check is actually bugged, this only checks for the last three save slots, ignoring the first one
+			// Note this check was actually bugged, this only checks for the last three save slots, ignoring the first one
 			// Also yes this check is still in Origins LOL
 			// It only works perchance, as per the bug listed right above
-			if options.saveSlot > 0
+			// Virtua Scarlet fixes this thankfully, not sure why hasn't this been fixed in GDT yet though...
+			if options.saveSlot > -1
 				stage.player2Enabled = false
 			end if
 			break
