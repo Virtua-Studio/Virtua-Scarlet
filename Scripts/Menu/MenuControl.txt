@@ -1,8 +1,7 @@
 // ----------------------------------
-// RSDK Project: RSDK-GDT 
-// Script Description: CD Menu Control
-// Script Author: Christian Whitehead adapted with the RSDK Script Converter to v4 and with manual modifications by Zero242
-// Original v3/CD Script Unpacked by Rubberduckycooly's script unpacker
+// RSDK Project: Virtua Scarlet
+// Script Description: Menu Control Object
+// Script Author: Klashicola/Geared
 // ----------------------------------
 
 // Aliases
@@ -118,7 +117,7 @@ event ObjectUpdate
 				Object.YOffsetCorrection = 0
 			end if
 
-			//Button Movement across the screen 
+			// Button Movement across the screen 
 			temp0 = Object.ButtonYOffset
 			temp0 -= 32
 
@@ -141,7 +140,7 @@ event ObjectUpdate
 				Object.CurrentSelection = 0
 			end if
 
-			if Object.MaxButtonCount > 4
+			if Object.MaxButtonCount > 6
 				CheckTouchRect(0, 0, screen.xsize, screen.ysize)
 				if checkResult > -1
 					arrayPos0 = checkResult
@@ -150,7 +149,7 @@ event ObjectUpdate
 						Object.DragPos = Object.ButtonYOffset
 						Object.DragYOffset = touchscreen[arrayPos0].ypos
 					else
-						//Dragging of buttons based on input
+						// Dragging of buttons based on input
 						temp0 = touchscreen[arrayPos0].ypos
 						temp0 -= Object.DragYOffset
 						temp0 += Object.DragPos
@@ -225,24 +224,24 @@ event ObjectUpdate
 							end if
 
 							temp0 = Object.MaxButtonCount
-							temp0 -= 4
+							temp0 -= 6
 							if Object.ButtonScroll > temp0
 								Object.ButtonScroll = temp0
 							end if
 						end if
 					else
-						//Drag screen re-centering
+						// Drag screen re-centering
 						temp0 = Object.ButtonYOffset
 						temp0 -= 32
 						Object.RecenterValue = Object.ButtonScroll
 						Object.RecenterValue *= -60
 						Object.RecenterValue -= temp0
 						Object.RecenterValue >>= 2
-						if Object.RecenterValue < -4
-							Object.RecenterValue = -4
+						if Object.RecenterValue < -6
+							Object.RecenterValue = -6
 						end if
-						if Object.RecenterValue > 4
-							Object.RecenterValue = 4
+						if Object.RecenterValue > 6
+							Object.RecenterValue = 6
 						end if
 						Object.ButtonYOffset += Object.RecenterValue
 					end if
@@ -261,7 +260,7 @@ event ObjectUpdate
 
 		break
 
-	case MENUCONTROL_BLANK //Used to stop the controls temporarily
+	case MENUCONTROL_BLANK // Used to stop the controls temporarily
 		break
 
 	case MENUCONTROL_ENTER_TIMEATTACK
@@ -280,7 +279,7 @@ event ObjectUpdate
 		end if
 		break
 
-	case MENUCONTROL_ENTER_TROPHIES //Mobile Only
+	case MENUCONTROL_ENTER_TROPHIES // Mobile Only, leftover from CD, not sure of why is it still here...
 		if Object.Fade < 320
 			Object.Fade += 8
 		else
@@ -316,12 +315,7 @@ end event
 
 event ObjectStartup
 	options.touchControls = false
-	Options.Soundtrack = saveRAM[38]
-	if Options.Soundtrack == OST_JP
-		SetMusicTrack("MainMenu.ogg", 0, 100512)
-	else
-		SetMusicTrack("MainMenuSAGE.ogg", 0, 117382)
-	end if
+	SetMusicTrack("MainMenu.ogg", 0, 100512) // The music playing is handled here, for some reason?
 	object[0].type = TypeName[Menu Control]
 	Object.ButtonYOffset[0] = 32
 	Options.PhysicalControls = false

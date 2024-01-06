@@ -1,6 +1,6 @@
 // ----------------------------------
 // RSDK Project: Virtua Scarlet
-// Script Description: Menu Button
+// Script Description: Menu Button Object
 // Script Author: Klashicola/Geared
 // ----------------------------------
 
@@ -665,7 +665,7 @@ event ObjectStartup
 
 	Object.DragLimit = Object.ButtonCount
 	Object.DragLimit *= -30
-	Object.DragLimit <<= 8
+	Object.DragLimit <<= 6
 	SpriteFrame(0, -10, 158, 21, 149, 712) // #0 - Button
 	temp0 = 0
 	temp1 = 18
