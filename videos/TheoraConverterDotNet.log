@@ -1,0 +1,10 @@
+----------------------------------------------------------------------------
+Theora Converter .NET
+Wednesday, January 10, 2024 1:13:10 AM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 640 --height 368 --framerate 30 --pp default --audiobitrate 128 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'logoREFG.mp4', (1.1 MB)
+Completed:  'logoREFG.ogv', (.4 MB) in .2 minutes.
+Finished processing all files at 1/10/2024 1:13 AM
