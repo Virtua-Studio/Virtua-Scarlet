@@ -20,6 +20,6 @@ event RSDKLoad
 	LoadSpriteSheet("Special/Objects.gif")
 	SpriteFrame(-8, -8, 16, 16, 206, 112)
 	
-	// Even if the object's blank, its property Value is still used!
+	// Even if the object's blank, its Property Value is still used!
 	SetVariableAlias(ALIAS_VAR_PROPVAL, "ufoDelay")
 end event
