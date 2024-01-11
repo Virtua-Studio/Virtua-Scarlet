@@ -1,77 +1,76 @@
-//----------------Sonic CD WaterSplash Script-----------------//
-//--------Scripted by Christian Whitehead 'The Taxman'--------//
-//-------Unpacked By Rubberduckycooly's Script Unpacker-------//
+// ----------------------------------
+// RSDK Project: Virtua Scarlet
+// Script Description: Water Splash Object
+// Script Author: Virtua Team
+// ----------------------------------
 
+// ========================
 // Aliases
+// ========================
 
 // HUD Alias
-#alias Object.Value7 : HUD.WaterTimer
+private alias object.value7 : hud.waterTimer
 
 // Player Alises
-#alias Player.XPos : SSSonic.XPos
-#alias Player.YPos : SSSonic.YPos
-#alias Object.Value0 : SSSonic.ZPos
-
-// Stage SFX
-#alias 1 : SFX_S_WATERSPLASH
+private alias object.xpos : ssSonic.xpos
+private alias object.ypos : ssSonic.ypos
+private alias object.value0 : ssSonic.zpos
 
 // Tile Info
 #alias 6 : TILEINFO_ANGLEA
 
 
-sub ObjectDraw
-	if SSSonic.YPos > 0
+// ========================
+// Events
+// ========================
+
+event ObjectDraw
+	if ssSonic.ypos > 0
 		// If Sonic's in the air, he certainly isn't splashing around anymore so unload
 		ResetObjectEntity(3, TypeName[Blank Object], 0, 0, 0)
 	else
-		
 		// Find the player's truncated X and Z pos
+		temp0 = ssSonic.xpos
+		temp0 >>= 16
 		
-		TempValue0 = SSSonic.XPos
-		TempValue0 >>= 16
-		
-		TempValue1 = SSSonic[-1].ZPos
-		TempValue1 >>= 16
+		temp1 = ssSonic[-1].zpos
+		temp1 >>= 16
 		
 		// Get the tile type Sonic's currently standing on
-		Get16x16TileInfo(CheckResult, TempValue0, TempValue1, TILEINFO_ANGLEA)
+		Get16x16TileInfo(checkResult, temp0, temp1, TILEINFO_ANGLEA)
 		
 		// Is it a water tile?
-		if CheckResult == 2
-			
-			if Object.Frame == 0
-				PlayStageSfx(SFX_S_WATERSPLASH, false)
+		if checkResult == 2
+			if object.frame == 0
+				PlaySfx(SfxName[Water Splash], false)
 				
-				if Stage.TimeEnabled == true
-					HUD[4].WaterTimer = 40
+				if stage.timeEnabled == true
+					hud[4].waterTimer = 40
 				end if
 			end if
 			
 			// Animate the object
-			Object.Frame++
-			if Object.Frame == 40
-				Object.Frame = 28
+			object.frame++
+			if object.frame == 40
+				object.frame = 28
 			end if
 			
 			// Get the frame it should draw
-			TempValue0 = Object.Frame
-			TempValue0 >>= 2
+			temp0 = object.frame
+			temp0 >>= 2
 			
 			// Draw the sprite around the center of the screen
-			DrawSpriteScreenXY(TempValue0, Screen.CenterX, 224)
-			
+			DrawSpriteScreenXY(temp0, screen.xcenter, 224)
 		else
 			// Sonic's not on a water tile, erase the Water Splash object
 			ResetObjectEntity(3, TypeName[Blank Object], 0, 0, 0)
-			HUD[4].WaterTimer = 0
+			hud[4].waterTimer = 0
 		end if
 	end if
-	
-end sub
+end event
 
 
-sub ObjectStartup
-	
+event ObjectStartup
 	LoadSpriteSheet("Special/Objects.gif")
 	
 	// Water Splash Frames
@@ -85,22 +84,21 @@ sub ObjectStartup
 	SpriteFrame(-20, -32, 40, 32, 42, 84)
 	SpriteFrame(-20, -32, 40, 32, 83, 84)
 	SpriteFrame(-20, -32, 40, 32, 1, 84)
-	
-end sub
+end event
 
 
 // ========================
-// Editor Subs
+// Editor Events
 // ========================
 
-sub RSDKDraw
+event RSDKDraw
 	DrawSprite(0)
-end sub
+end event
 
 
-sub RSDKLoad
+event RSDKLoad
 	LoadSpriteSheet("Special/Objects.gif")
 	SpriteFrame(-20, -32, 40, 32, 42, 84)
 
 	SetVariableAlias(ALIAS_VAR_PROPVAL, "unused")
-end sub
+end event
