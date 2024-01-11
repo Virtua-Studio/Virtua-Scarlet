@@ -82,7 +82,7 @@ event ObjectDraw
 end event
 
 
-sub ObjectStartup
+event ObjectStartup
 	LoadSpriteSheet("Special/Objects.gif")
 	
 	// 0-3 - Chaos Emerald Frames
@@ -96,7 +96,7 @@ sub ObjectStartup
 	SpriteFrame(-8, -8, 16, 16, 83, 126)
 	
 	// No extra sprites needed for alternate colors - they're handled via palettes stored in the StageConfig instead
-end sub
+end event
 
 
 // ========================
