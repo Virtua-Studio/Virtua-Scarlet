@@ -355,6 +355,8 @@ reserve function Player_Action_DblJumpAmy
 reserve function Player_Metal_DblJump
 reserve function Player_Action_DblJumpMSonic
 reserve function Player_State_Victory
+reserve function Player_State_WallClingCheck
+reserve function Player_State_WallCling
 
 // ========================
 // Static Values
@@ -2406,6 +2408,12 @@ end function
 
 
 public function Player_HandleAirMovement
+	if player.jumpPress == true
+		if stage.playerListPos == PLAYER_SONIC_ALONE
+			player.state = Player_State_WallClingCheck
+		end if
+	end if
+
 	player.scrollTracking = true
 	player.yvel += player.gravityStrength
 	if player.yvel < player.jumpCap
@@ -2861,6 +2869,119 @@ public function Player_Action_DblJumpMSonic
 			else
 				CallFunction(Player_Metal_DblJump)
 			end if
+	end if
+end function
+
+public function Player_State_WallClingCheck
+	GetBit(temp0, player.direction, 0)
+	if temp0 == FLIP_NONE
+		ObjectTileCollision(CSIDE_LWALL, 12, -2, object.collisionPlane)
+		temp1 = checkResult
+	else
+		ObjectTileCollision(CSIDE_RWALL, -12, -2, object.collisionPlane)
+		temp1 = checkResult
+	endif
+
+	if checkResult == 1
+			player.state = Player_State_WallCling
+			player.speed = 0
+			player.xvel = 0
+			player.yvel = 0
+			player.timer = 0
+			PlaySfx(SfxName[Catch], false)
+	end if
+	
+	CallFunction(Player_State_Air)
+end function
+
+public function Player_State_WallCling
+	if player.gravity == GRAVITY_AIR
+		player.animation = ANI_CLIMBING
+			if player.down == true
+				if Player_superState == SUPERSTATE_SUPER
+					player.yvel = 0x20000
+				else
+					player.yvel = 0x10000
+				end if
+
+				player.timer++
+				if player.timer == 4
+					player.timer = 0
+					if player.frame < 1
+						player.frame += 6
+					end if
+
+					player.frame--
+				end if
+			else
+				if player.timer < 9
+					player.timer ++
+				else
+					player.yvel = 0x8000
+				endif
+			end if
+
+		if player.jumpPress == true
+			player.animation = ANI_JUMPING
+			player.timer = 0
+			PlaySfx(SfxName[Jump], false)
+
+			if player.direction == FACING_LEFT
+				player.xvel = 0x40000
+				player.speed = 0x40000
+				player.direction = FACING_RIGHT
+			else
+				player.xvel = -0x40000
+				player.speed = -0x40000
+				player.direction = FACING_LEFT
+			end if
+
+			player.yvel = -0x60000
+			if player.gravityStrength != 0x3800
+				player.xvel >>= 1
+				player.speed >>= 1
+				player.yvel >>= 1
+			end if
+
+			player.state = Player_State_WallClingCheck
+		else
+			if player.direction == FACING_RIGHT
+				temp2 = player.xpos
+				ObjectTileGrip(CSIDE_LWALL, 10, -10, player.collisionPlane)
+
+				temp0 = checkResult
+				temp3 = player.xpos
+				player.xpos = temp2
+				ObjectTileGrip(CSIDE_LWALL, 10, 11, player.collisionPlane)
+
+				temp1 = checkResult
+				if player.xpos > temp3
+					player.xpos = temp3
+				end if
+			else
+				temp2 = player.xpos
+				ObjectTileGrip(CSIDE_RWALL, -10, -10, player.collisionPlane)
+
+				temp0 = checkResult
+				temp3 = player.xpos
+				player.xpos = temp2
+				ObjectTileGrip(CSIDE_RWALL, -10, 11, player.collisionPlane)
+
+				temp1 = checkResult
+				if player.xpos < temp3
+					player.xpos = temp3
+				end if
+			end if
+
+
+				if temp1 == false
+					player.state = Player_State_Air
+				end if
+		end if
+	else
+		player.animation = ANI_WALKING
+		player.state = Player_State_Ground
+		CallFunction(Player_HandleOnGround)
 	end if
 end function
 
