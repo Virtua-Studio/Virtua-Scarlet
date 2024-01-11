@@ -1,7 +1,7 @@
 // ----------------------------------
 // RSDK Project: Virtua Scarlet
 // Script Description: Start Message Object
-// Script Author: Klashicola/Geared
+// Script Author: Virtua Team
 // ----------------------------------
 
 // ========================
@@ -16,7 +16,6 @@ private alias  0 : START_AWAITACTION
 private alias  1 : START_GOTO_MENU
 
 // Presentation Stages
-private alias 0 : STAGE_P_TITLE
 private alias 3 : STAGE_P_MENU
 
 
@@ -47,8 +46,8 @@ event ObjectUpdate
 		if checkResult > -1
 			object.state = START_GOTO_MENU
 
-			PlaySfx(SfxName[Menu Select], false)
 			StopMusic()
+			PlaySfx(SfxName[Menu Select], false)
 		else
 			object.attractTimer++
 			if object.attractTimer == 1620
@@ -60,7 +59,6 @@ event ObjectUpdate
 	case START_GOTO_MENU
 		object.timer += 8
 		if object.timer == 320
-			LoadVideo("Opening")
 			stage.listPos = STAGE_P_MENU
 			LoadStage()
 		end if
@@ -90,7 +88,7 @@ event ObjectStartup
 		SpriteFrame(-72, -23, 144, 8, 1, 47)		// Press Start	- #0
 		break
 			
-		case MOBILE
+	case MOBILE
 		SpriteFrame(-57, -23, 112, 8, 1, 67)	// Touch To Start 	- #0
 		break
 		
