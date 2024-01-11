@@ -1,124 +1,124 @@
-//--------------------Sonic CD Ring Script--------------------//
-//--------Scripted by Christian Whitehead 'The Taxman'--------//
-//-------Unpacked By Rubberduckycooly's Script Unpacker-------//
+// ----------------------------------
+// RSDK Project: Virtua Scarlet
+// Script Description: Ring Object
+// Script Author: Virtua Team
+// ----------------------------------
 
+// ========================
 // Aliases
-private alias Object.Value0 : Object.ZPos
-private alias Object.Value1 : Object.XVelocity
-private alias Object.Value2 : Object.YVelocity
-private alias Object.Value3 : Object.ZVelocity
-private alias Object.Value4 : Object.Timer
-private alias Object.Value5 : Object.ScreenDepth
-private alias Object.ScreenXPos : Object.ScreenXPos
+// ========================
+
+private alias object.value0 : object.zpos
+private alias object.value1 : object.zvel
+private alias object.value2 : object.timer
+private alias object.value3 : object.screenDepth
+private alias object.value4 : object.screenXPos
 
 
-event Objectupdate
+// ========================
+// Events
+// ========================
+
+event ObjectUpdate
 	// Update movements
-	Object.XPos += Object.XVelocity
-	Object.YPos += Object.YVelocity
-	Object.ZPos += Object.ZVelocity
-	
+	object.xpos += object.xvel
+	object.ypos += object.yvel
+	object.zpos += object.zvel
+
 	// Apply a gravity of an eight of a pixel per frame
-	Object.YVel -= 0x2000
-	
-	if Object.YPos < 0
+	object.yvel -= 0x2000
+
+	if object.ypos < 0
 		// If the ring has hit the floor, then bounce back up
-		
-		Object.YPos = 0
-		FlipSign(Object.YVel)
+		object.ypos = 0
+		FlipSign(object.yvel)
 	end if
-	
-	temp0 = Object.XPos
-	temp0 -= TileLayer[0].XPos
+
+	temp0 = object.xpos
+	temp0 -= tileLayer[0].xpos
 	temp0 >>= 8
-	
-	temp1 = Object.ZPos
-	temp1 -= TileLayer[0].ZPos
+
+	temp1 = object.zpos
+	temp1 -= tileLayer[0].zpos
 	temp1 >>= 8
-	
-	Sin(temp2, TileLayer[0].Angle)
+
+	Sin(temp2, tileLayer[0].angle)
 	temp2 *= temp1
-	Cos(temp3, TileLayer[0].Angle)
+	Cos(temp3, tileLayer[0].angle)
 	temp3 *= temp0
-	
-	Object.iXPos = temp2
-	Object.iXPos -= temp3
-	Object.iXPos >>= 9
-	
-	Cos(temp2, TileLayer[0].Angle)
-	temp2 *= temp1
-	Sin(temp3, TileLayer[0].Angle)
+
+	object.screenXPos = temp2
+	object.screenXPos -= temp3
+	object.screenXPos >>= 9
+
+	Cos(temp2, tileLayer[0].angle)
+	temp2 *= Temp1
+	Sin(temp3, tileLayer[0].angle)
 	temp3 *= temp0
-	
-	Object.ScreenDepth = temp2
-	Object.ScreenDepth += temp3
-	Object.ScreenDepth >>= 9
-	
+
+	object.screenDepth = temp2
+	object.screenDepth += temp3
+	object.screenDepth >>= 9
+
 	// Make the ring despawn after a little bit
-	Object.Timer++
-	if Object.Timer == 160
-		Object.Type = TypeName[Blank Object]
+	object.timer++
+	if object.timer == 160
+		object.type = TypeName[Blank Object]
 	end if
-	
 end event
 
 
 event ObjectDraw
-	if Object.ScreenDepth > 256 // Don't draw if the Ring is too close to the screen
-		
+	if object.screenDepth > 256 // Don't draw if the Ring is too close to the screen
 		// Do some maths to find the position & scale the Ring should be at
-		
-		Object.Scale = 0xC00000
-		Object.Scale /= Object.ScreenDepth
+		object.scale = 0xC00000
+		object.scale /= object.screenDepth
 		
 		temp0 = 768
-		temp0 -= Object.Scale
+		temp0 -= object.scale
 		temp0 /= 6
 		
-		temp1 = Object.ScreenDepth
+		temp1 = object.screenDepth
 		temp1 >>= 12
 		
 		if temp0 > 0
-			Object.Scale += temp0
-			Object.Scale -= temp1
+			object.scale += temp0
+			object.scale -= temp1
 		end if
 		
-		temp0 = Object.ScreenXPos
+		temp0 = object.screenXPos
 		temp0 *= 192
-		temp0 /= Object.ScreenDepth
-		temp0 += Screen.xcenter
+		temp0 /= object.screenDepth
+		temp0 += screen.xcenter
 		
-		temp1 = TileLayer[0].YPos
-		temp1 -= Object.YPos
+		temp1 = tileLayer[0].ypos
+		temp1 -= object.ypos
 		temp1 >>= 8
 		temp1 *= 96
-		temp1 /= Object.ScreenDepth
+		temp1 /= object.screenDepth
 		temp1 += 128
 		
 		// Find the sprite to draw the Ring with
-		temp2 = Object.Timer
+		temp2 = object.timer
 		temp2 &= 31
 		temp2 >>= 3
 		
 		DrawSpriteScreenFX(temp2, FX_SCALE, temp0, temp1)
 		
 		// Find the position of the ground where the ring is
-		temp1 = TileLayer[0].YPos
+		temp1 = tileLayer[0].ypos
 		temp1 >>= 8
 		temp1 *= 96
-		temp1 /= Object.ScreenDepth	
+		temp1 /= object.screenDepth
 		temp1 += 128
 		
 		// Draw a shadow there
 		DrawSpriteScreenFX(4, FX_SCALE, temp0, temp1)
-		
 	end if
-	
 end event
 
 
 event ObjectStartup
-	
 	LoadSpriteSheet("Special/Objects.gif")
 	
 	// Ring Frames
@@ -129,7 +129,6 @@ event ObjectStartup
 	
 	// Shadow Frame
 	SpriteFrame(-9, -4, 18, 8, 83, 117)
-	
 end event
 
 

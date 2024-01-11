@@ -15,10 +15,10 @@ private alias 0 : DUSTPUFF_SPAWNER
 private alias 1 : DUSTPUFF_CHILD
 
 // Player aliases
-private alias object.left      : player.left
-private alias object.right      : player.right
-private alias object.xpos   : ssSonic.xpos
-private alias object.ypos   : ssSonic.ypos
+private alias object.left   : player.left
+private alias object.right  : player.right
+private alias object.xpos    : ssSonic.xpos
+private alias object.ypos    : ssSonic.ypos
 private alias object.value0 : ssSonic.zpos
 
 // Tile Info
