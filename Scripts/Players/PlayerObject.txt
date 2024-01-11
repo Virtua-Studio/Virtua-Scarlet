@@ -1,8 +1,7 @@
 // ----------------------------------
-// RSDK Project: RSDK-GDT
-// Script Description: Player Object
-// Script Author: Christian Whitehead, Nd, Geared, Klashicola, Twanvanb1, Zombstech, Zero242, Megadeglitcher
-// Original S2 Script Unpacked by Rubberduckycooly's script unpacker
+// RSDK Project: Virtua Scarlet
+// Script Description: Player Object Object
+// Script Author: Virtua Team
 // ----------------------------------
 
 // ========================
@@ -2872,17 +2871,18 @@ public function Player_Action_DblJumpMSonic
 	end if
 end function
 
+
 public function Player_State_WallClingCheck
 	GetBit(temp0, player.direction, 0)
 	if temp0 == FLIP_NONE
-		ObjectTileCollision(CSIDE_LWALL, 12, -2, object.collisionPlane)
+		ObjectTileCollision(CSIDE_LWALL, 12, -2, player.collisionPlane)
 		temp1 = checkResult
 	else
-		ObjectTileCollision(CSIDE_RWALL, -12, -2, object.collisionPlane)
+		ObjectTileCollision(CSIDE_RWALL, -12, -2, player.collisionPlane)
 		temp1 = checkResult
-	endif
+	end if
 
-	if checkResult == 1
+	if checkResult == true
 			player.state = Player_State_WallCling
 			player.speed = 0
 			player.xvel = 0
@@ -2893,6 +2893,7 @@ public function Player_State_WallClingCheck
 	
 	CallFunction(Player_State_Air)
 end function
+
 
 public function Player_State_WallCling
 	if player.gravity == GRAVITY_AIR
@@ -2984,6 +2985,7 @@ public function Player_State_WallCling
 		CallFunction(Player_HandleOnGround)
 	end if
 end function
+
 
 public function Player_Action_DblJumpSonic
 	if keyPress[1].buttonY != false
