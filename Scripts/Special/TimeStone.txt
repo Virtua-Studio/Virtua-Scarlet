@@ -1,82 +1,91 @@
-//----------------Sonic CD Time Stone Script------------------//
-//--------Scripted by Christian Whitehead 'The Taxman'--------//
-//-------Unpacked By Rubberduckycooly's Script Unpacker-------//
+// ----------------------------------
+// RSDK Project: Virtua Scarlet
+// Script Description: Chaos Emerald Object
+// Script Author: Virtua Team
+// ----------------------------------
+
+// The script path uses "Time Stone" but the object is actually a "Chaos Emerald", so we're sticking with the latter for names here
+
+// ========================
+// Aliases
+// ========================
 
 // Sonic Aliases
-private alias Object.State : SSSonic.State
-private alias Object.Frame : SSSonic.Frame
+private alias object.state : ssSonic.state
+private alias object.frame : ssSonic.frame
 
 // States
-private alias 0  : TIMESTONE_FALLING
-private alias 1  : TIMESTONE_HELD
+private alias 0  : CHAOSEMERALD_FALLING
+private alias 1  : CHAOSEMERALD_HELD
 
 // Special Stage Sonic States
 private alias 10 : SSSONIC_STONEGRABBED
 
-// SFX Aliases
-private alias 21 : SFX_G_ACHIEVEMENT
 
+// ========================
+// Events
+// ========================
 
 event ObjectDraw
-	// Get the frame the Stone should draw
+	// Get the frame the Emerald should draw
 	// (But note that it's not drawn till the end, see there)
-	temp0 = Object.Frame
+	temp0 = object.frame
 	temp0 /= 12
-	
-	// Animate the Stone
-	Object.Frame++
-	if Object.Frame > 47
-		Object.Frame = 0
-	end if
-	
-	if Object.State == TIMESTONE_FALLING
-		// Stone's still falling, so draw the sparkles that it's dropping
-		
-		// Smaller sparkle, to be 32 pixels above the Time Stone
-		temp1 = Object.YPos
-		temp1 -= 0x200000
-		DrawSpriteFX(5, FX_FLIP, Object.XPos, temp1)
-		
-		// Bigger sparkle, 12 pixels below the smaller sparkle (absolute difference of 20 pixels above the Time Stone)
-		temp1 += 0xC0000
-		DrawSpriteFX(4, FX_FLIP, Object.XPos, temp1)
-		
-		// Flip the object when needed in order to make the rotating animation appear smoother
-		Object.Direction = Object.Frame
-		Object.Direction %= 24
-		Object.Direction /= 6
-		
-		if Object.iYPos < 200
-			// Time Stone isn't at its target destination yet, keep it falling at a rate of 1.5 px per frame
-			Object.YPos += 0x18000
-		else
-			
-			// Snap to Sonic's hands
-			Object.iYPos = 200
-			
-			// Stop further movement of the Stone
-			Object.State = TIMESTONE_HELD
-			PlaySfx(SFX_G_ACHIEVEMENT, false)
-			
-			// Signal to the Sonic Object that he's grabbed the Stone, from here he'll handle the rest
-			SSSonic[2].State = SSSONIC_STONEGRABBED
-			SSSonic[2].Frame++
 
+	// Animate the Emerald
+	object.frame++
+	if object.frame > 47
+		object.frame = 0
+	end if
+
+	if object.state == CHAOSEMERALD_FALLING
+		// Emerald's still falling, so draw the sparkles that it's dropping
+		// Smaller sparkle, to be 32 pixels above the Chaos Emerald
+		temp1 = object.ypos
+		temp1 -= 0x200000
+		DrawSpriteFX(5, FX_FLIP, object.xpos, temp1)
+
+		// Bigger sparkle, 12 pixels below the smaller sparkle (absolute difference of 20 pixels above the Chaos Emerald)
+		temp1 += 0xC0000
+		DrawSpriteFX(4, FX_FLIP, object.xpos, temp1)
+
+		// Flip the object when needed in order to make the rotating animation appear smoother
+		object.direction = object.frame
+		object.direction %= 24
+		object.direction /= 6
+
+		if object.iypos < 200
+			// Chaos Emerald isn't at its target destination yet, keep it falling at a rate of 1.5 px per frame
+			object.ypos += 0x18000
+		else
+			// Snap to Sonic's hands
+			object.iypos = 200
+
+			// Stop further movement of the Emerald
+			object.state = CHAOSEMERALD_HELD
+			PlaySfx(SfxName[Emerald], false)
+
+			// Signal to the Sonic Object that he's grabbed the Emerald, from here he'll handle the rest
+			ssSonic[2].state = SSSONIC_STONEGRABBED
+			ssSonic[2].frame++
+
+#platform: USE_ORIGINS
+			// Let the Engine know we've touched an Emerald
+			CallNativeFunction2(NotifyCallback, NOTIFY_TOUCH_EMERALD, 0)
+#endplatform
 		end if
 	end if
 	
-	// Draw the actual Stone sprite
+	// Draw the actual Emerald sprite
 	// It's drawn all the way at the end of the process so that it stays above the sparkles, drawn before
 	DrawSprite(temp0)
-	
 end event
 
 
-event ObjectStartup
-	
+sub ObjectStartup
 	LoadSpriteSheet("Special/Objects.gif")
 	
-	// 0-3 - Time Stone Frames
+	// 0-3 - Chaos Emerald Frames
 	SpriteFrame(-10, -12, 20, 24, 1, 232)
 	SpriteFrame(-10, -12, 20, 24, 22, 232)
 	SpriteFrame(-10, -12, 20, 24, 43, 232)
@@ -86,9 +95,8 @@ event ObjectStartup
 	SpriteFrame(-12, -12, 24, 24, 83, 143)
 	SpriteFrame(-8, -8, 16, 16, 83, 126)
 	
-	// No extra sprites needed for alternate colours - they're handled via palettes stored in the StageConfig instead
-	
-end event
+	// No extra sprites needed for alternate colors - they're handled via palettes stored in the StageConfig instead
+end sub
 
 
 // ========================
