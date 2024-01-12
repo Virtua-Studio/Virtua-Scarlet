@@ -51,6 +51,7 @@ event ObjectUpdate
 		else
 			object.attractTimer++
 			if object.attractTimer == 1620
+			SetScreenFade(0x00, 0x00, 0x00, object.timer)
 				LoadVideo("Opening")
 			end if
 		end if
