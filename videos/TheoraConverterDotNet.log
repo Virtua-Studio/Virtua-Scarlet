@@ -38,3 +38,13 @@ Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
 Converting: 'REFGlogo3.mp4', (2.2 MB)
 Completed:  'REFGlogo3.ogv', (.4 MB) in .3 minutes.
 Finished processing all files at 1/11/2024 12:36 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Thursday, January 11, 2024 9:14:22 PM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 640 --height 368 --framerate 30 --croptop 0 --cropbottom 0 --cropleft 0 --cropright 0 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'Credits.mp4', (8.4 MB)
+Completed:  'Credits.ogv', (4.3 MB) in 3.6 minutes.
+Finished processing all files at 1/11/2024 9:17 PM
