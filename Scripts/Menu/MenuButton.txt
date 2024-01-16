@@ -1,7 +1,8 @@
 // ----------------------------------
-// RSDK Project: Virtua Scarlet
-// Script Description: Menu Button Object
-// Script Author: Klashicola/Geared
+// RSDK Project: RSDK-GDT 
+// Script Description: CD Menu Button
+// Script Author: Christian Whitehead adapted with the RSDK Script Converter to v4 and with manual modifications by Zero242
+// Original v3/CD Script Unpacked by Rubberduckycooly's script unpacker
 // ----------------------------------
 
 // Aliases
@@ -65,7 +66,8 @@ private alias 5 : MENUCONTROL_ENTER_DEMO
 private alias 7 : MENUCONTROL_ENTER_TROPHIES
 private alias 8 : MENUCONTROL_ENTER_LEADERBOARDS
 private alias 9 : MENUCONTROL_ENTER_LEVELSELECT
-private alias 9 : MENUCONTROL_EXIT_GAME
+private alias 10 : MENUCONTROL_EXIT_GAME
+
 // Menu Window States
 private alias 5 : MENUWINDOW_SOUNDTRACK_EXPAND
 
@@ -148,21 +150,21 @@ end function
 event ObjectUpdate
 	Object.ButtonYOffSet = Object.ButtonYPos
 	Object.ButtonYOffSet--
-	Object.ButtonYOffSet *= 34
+	Object.ButtonYOffSet *= 60
 	Object.ButtonYOffSet += MenuControl.ButtonYOffset
 
 	temp0 = screen.xcenter
-	temp0 -= 110
+	temp0 -= 160
 
 	Object.ButtonXOffSet = Object.ButtonYOffSet
-	Object.ButtonXOffSet *= 170
-	Object.ButtonXOffSet /= -162
-	Object.ButtonXOffSet -= -455
+	Object.ButtonXOffSet *= 54
+	Object.ButtonXOffSet /= 60
+	Object.ButtonXOffSet -= 16
 	Object.ButtonXOffSet += temp0
 
 	switch object.state
 	case MENUBUTTON_DELAY
-		if Object.Timer < 0
+		if Object.Timer < 60
 			Object.Timer++
 		else
 			Object.Timer = 0
@@ -172,7 +174,7 @@ event ObjectUpdate
 
 	case MENUBUTTON_BUTTONS_IN
 		temp0 = Object.ButtonXOffSet
-		temp0 <<= 15
+		temp0 <<= 16
 		temp0 -= object.xpos
 		temp0 >>= 4
 		object.xpos += temp0
@@ -193,7 +195,7 @@ event ObjectUpdate
 
 	case MENUBUTTON_CONFIRM_SELECTION
 		object.xpos = Object.ButtonXOffSet
-		object.xpos <<= 15
+		object.xpos <<= 16
 
 		object.ypos = Object.ButtonYOffSet
 		object.ypos <<= 16
@@ -428,6 +430,8 @@ event ObjectUpdate
 					object.state = MENUBUTTON_CONFIRM_SELECTION
 
 					MenuControl.State = MENUCONTROL_CONTROLS
+// WARNING: Function FUNC_ENGINECALLBACK does not exist in RSDKv4!
+// Arguments: CALLBACK_FULL_VERSION_ONLY
 					MenuControl.CurrentDrag = 0
 				end if
 				break
@@ -490,13 +494,15 @@ event ObjectUpdate
 				StopMusic()
 				object.state = MENUBUTTON_BLANK
 
-				MenuControl.State = MENUCONTROL_ENTER_TIMEATTACK
+				MenuControl.State = MENUCONTROL_EXIT_GAME
 				MenuControl.Fade = 0
 
+				MenuWindow.State = 47
 				ResetObjectEntity(63, TypeName[Blank Object], 0, 0, 0)
 				ResetObjectEntity(64, TypeName[Blank Object], 0, 0, 0)
 				ResetObjectEntity(65, TypeName[Blank Object], 0, 0, 0)
 				ResetObjectEntity(66, TypeName[Blank Object], 0, 0, 0)
+				break
 
 			case Menu_Soundtrack
 				MenuHeading.State = MENUHEADING_LEAVE_SCREEN
@@ -515,6 +521,7 @@ event ObjectUpdate
 				ResetObjectEntity(66, TypeName[Blank Object], 0, 0, 0)
 				object.type = TypeName[Blank Object]
 				break
+
 			end switch
 		end if
 		break
@@ -552,7 +559,7 @@ event ObjectUpdate
 		end if
 		break
 
-	case MENUBUTTON_RESET // Used by MenuWindow
+	case MENUBUTTON_RESET //Used by MenuWindow
 		if object.propertyValue >= Menu_Extras
 			if PrevMenuButton.State == MENUBUTTON_CONFIRM_SELECTION
 				object.state = MENUBUTTON_CONFIRM_SELECTION
@@ -645,9 +652,10 @@ event ObjectStartup
 	object[35].propertyValue = Menu_TimeAttack
 	object[36].propertyValue = Menu_Achievements
 	object[37].propertyValue = Menu_Help&Options
-	object[38].propertyValue = Menu_Extras
-	object[39].propertyValue = Menu_Exit
-	Object.ButtonCount = 6
+	object[38].propertyValue = Menu_Soundtrack
+	object[39].propertyValue = Menu_Extras
+	object[40].propertyValue = Menu_Exit
+	Object.ButtonCount = 7
 	arrayPos0 = 34
 	temp0 = 0
 	while temp0 < Object.ButtonCount
@@ -665,7 +673,7 @@ event ObjectStartup
 
 	Object.DragLimit = Object.ButtonCount
 	Object.DragLimit *= -30
-	Object.DragLimit <<= 6
+	Object.DragLimit <<= 8
 	SpriteFrame(0, -10, 158, 21, 149, 712) // #0 - Button
 	temp0 = 0
 	temp1 = 18

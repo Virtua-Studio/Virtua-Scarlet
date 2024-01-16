@@ -360,7 +360,7 @@ event ObjectUpdate
 
 			case 2
 				stage.listPos = STAGE_P_STAFFCREDITS
-				LoadVideo("Credits")
+				LoadStage()
 				break
 
 			case 3 //Unused

@@ -14,11 +14,11 @@ private alias object.value3 : Object.Angle
 private alias object.value4 : Object.GFX1
 private alias object.value5 : Object.GFX2
 
-// object[1] is a blank object just to share values
+// Object[1] is a blank object just to share values
 private alias object[1].value2 : Object.MaxButtonCount
 
-// MenuHeading_CheckTouchBack Specific Values
-private alias object.value1 : CurrentMenu.ButtonPressed // Current Menu Button Pressed
+//MenuHeading_CheckTouchBack Specific Values
+private alias object.value1 : CurrentMenu.ButtonPressed //Current Menu Button Pressed
 private alias object[1].value4 : Object.BackTouchPress
 
 // States
@@ -45,8 +45,7 @@ private alias 3 : LANG_DEUTSCH
 private alias 4 : LANG_SPANISH
 private alias 5 : LANG_JAPANESE
 
-// Engine & CallBacks
-// Originally only used in v4 Revision 0, but Scarlet Engine restores it so...
+//Engine & CallBacks
 private alias 2 : MESSAGE_LOSTFOCUS
 
 // Device Type
@@ -56,8 +55,8 @@ private alias 0 : RETRO_STANDARD
 reserve function MenuHeading_CheckTouchBack
 
 
-public function MenuHeading_CheckTouchBack
-	// This is used by other scripts to check if the back touch button was pressed or not
+public function MenuHeading_CheckTouchBack //This is used by other scripts to check if the back touch button is pressed
+// WARNING: Variable VAR_ENGINEMESSAGE does not exist in RSDKv4!
 	temp0 = screen.xsize
 	temp0 -= 76
 	CheckTouchRect(temp0, 192, screen.xsize, screen.ysize)
@@ -125,26 +124,49 @@ end event
 
 
 event ObjectDraw
-	// Here stands the start of a new era...
+	//Draw BG Details
+	Object.YOffset--
+	Object.YOffset %= 240
 	object.spriteSheet = Object.GFX1
-	DrawSpriteScreenXY(11, 0, 0) // Vertical Main Bar Drawing
+	DrawSpriteScreenXY(1, screen.xcenter, Object.YOffset)
+	DrawSpriteScreenXY(2, screen.xcenter, Object.YOffset)
+	DrawSpriteScreenXY(0, screen.xcenter, 20)
 
-	// Hacky method to support all screen sizes
-	// (We don't wanna pull out the same method we used on the splash screens at the time Virtua Scarlet was still called Project Virtua (Virtua Scarlet's second oldest version)...)
-	temp0 = screen.xsize
-	temp0 -= 280
-	DrawSpriteScreenXY(12, temp0, 0) // Horizontal Main Triangle Drawing
+	temp0 = screen.xcenter
+	temp0 += 200
+	DrawRect(temp0, 20, screen.xsize, 9, 0, 0, 0, 255)
+	temp0 = screen.xcenter
+	temp0 += 12
+	DrawRect(0, 212, temp0, 13, 0, 0, 0, 255)
 
-	// Draw the Menu Header
-	// Originally this was at above of the main drawings above
-	// but due to some problems of it being in there, such as draw orders and the stuff you expect
-	// It had to be moved here, so it won't have the draw order problems from before (hip hop horray moment)
+	//Draw Menu Header
 	object.spriteSheet = Object.GFX2
 	temp0 = screen.xcenter
 	temp0 -= 160
 	temp0 >>= 2
 	temp0 += Object.XOffset
-	DrawSpriteScreenXY(object.frame, temp0, 0)
+	DrawSpriteScreenXY(object.frame, temp0, 194)
+
+	//Draw Detail Arrows (Standard) / Drag Arrows (Mobile)
+	object.spriteSheet = Object.GFX1
+
+	Object.Angle += 4
+	Object.Angle &= 511
+
+	temp0 = screen.xsize
+	temp0 -= 40
+	//Check if the menu needs dragging to reach all the buttons
+	if Object.MaxButtonCount > 4
+		Sin(temp1, Object.Angle)
+		temp1 >>= 6
+		temp1 += 96
+		DrawSpriteScreenFX(3, FX_INK, temp0, temp1)
+
+		Sin(temp1, Object.Angle)
+		temp1 /= -64
+		temp1 += 144
+		DrawSpriteScreenFX(4, FX_INK, 40, temp1)
+	end if
 end event
 
 
@@ -185,18 +207,16 @@ event ObjectStartup
 		end if
 		arrayPos0++
 	loop
-	// MenuGfx1's spritesheet stuff
-	SpriteFrame(12, 0, 216, 9, 1, 225) // #0 RSDK-GDT Bar (though this gets overdrawn by the main bars so fuck it LOL)
+	//MenuGfx1
+	SpriteFrame(12, 0, 216, 9, 1, 225) // #0 Sonic The Hedgehog CD Bar
 
 	SpriteFrame(8, 0, 8, 240, 503, 1) // #1 Vertical Line 1
-	SpriteFrame(8, 240, 8, 240, 503, 1) // #2 Vertical Line 2
+	SpriteFrame(8, 240, 8, 240, 503, 1) // #2 Vertical Line 
 
-	// Slight modification, CD originally had some funny checks for those
-	// But due to Virtua Scarlet having some major changes compared to v3, this had to be edited to something like this
+	// Slight modification, in origins this was a normal "if Engine.DeviceType == RETRO_STANDARD", written like this to help with compatibility
 	if Engine.DeviceType == RETRO_STANDARD
-		checkResult = true // standar es tru :skull:
+		checkResult = true //standar es tru xd
 	end if
-
 	if checkResult == true
 		SpriteFrame(-11, -36, 22, 72, 418, 366) // #3 Up Arrow
 		SpriteFrame(-11, -36, 22, 72, 441, 366) // #4 Down Arrow
@@ -230,7 +250,7 @@ event ObjectStartup
 
 		end switch
 	end if
-	// MenuGfx2's spritesheet stuff
+	//MenuGfx2
 	switch engine.language
 	case LANG_ENGLISH
 	case LANG_JAPANESE
@@ -279,9 +299,6 @@ event ObjectStartup
 
 		break
 	end switch
-
-	SpriteFrame(0, 0, 384, 32, 1, 1495) // #11 Vertical Main Bar
-	SpriteFrame(-220, 0, 500, 240, 1, 1529) // #12 Horizontal Main Bar
 end event
 
 
@@ -299,5 +316,5 @@ event RSDKLoad
 	SpriteFrame(32, 0, 160, 30, 1, 615) // #5 Main Menu
 
 	// Although used by the object, it's not to be set from the editor
-	SetVariableAlias(ALIAS_VAR_PROPVAL, "unused") // No clue from why Zero removed this in the original script for RSDK-GDT, but uh, it's Restored now! (Absolutely not a pun for both Sonic 2 Absolute & Sonic CD Restored!!)
+
 end event
