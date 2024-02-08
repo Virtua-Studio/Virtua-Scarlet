@@ -83,6 +83,10 @@ event ObjectUpdate
 		if object.timer > 7
 			tileLayer[4].deformationOffset++
 			object.timer = 0
+
+            // Add this damn bitch called "Clouds" in object[-1]
+            // I'm going to explode if this doesn't works as expected
+            object[-1].type = TypeName[Clouds]
 		end if
 		break
 		
