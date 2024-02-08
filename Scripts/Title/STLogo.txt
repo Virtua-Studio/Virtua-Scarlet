@@ -139,6 +139,10 @@ event ObjectDraw
 		temp0 = screen.xsize
 		temp0 -= 96
 		DrawSpriteScreenXY(1, temp0, 216)
+
+            // Add this damn bitch called "Clouds" in object[-1]
+            // It's also here for testing reasons, if you ask me
+            object[-1].type = TypeName[Clouds]
 		break
 		
 	end switch
