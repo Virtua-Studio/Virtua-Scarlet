@@ -48,3 +48,109 @@ Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
 Converting: 'Credits.mp4', (8.4 MB)
 Completed:  'Credits.ogv', (4.3 MB) in 3.6 minutes.
 Finished processing all files at 1/11/2024 9:17 PM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:27:23 AM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 1280 --height 960 --framerate 30 --croptop 0 --cropbottom 0 --cropleft 0 --cropright 0 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'toomuchworkforfunnysplash.mp4', (4.1 MB)
+Converting: 'scarlet.mp4', (6.1 MB)
+Completed:  'scarlet.ogv', (.7 MB) in .6 minutes.
+Completed:  'toomuchworkforfunnysplash.ogv', (1.8 MB) in .9 minutes.
+Finished processing all files at 2/11/2024 8:28 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:30:02 AM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 1280 --height 720 --framerate 30 --croptop 0 --cropbottom 0 --cropleft 0 --cropright 0 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'toomuchworkforfunnysplash.mp4', (4.1 MB)
+Converting: 'scarlet.mp4', (6.1 MB)
+Completed:  'scarlet.ogv', (.5 MB) in .5 minutes.
+Completed:  'toomuchworkforfunnysplash.ogv', (.4 MB) in .7 minutes.
+Finished processing all files at 2/11/2024 8:30 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:31:51 AM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 1280 --height 720 --framerate 30 --croptop 0 --cropbottom 0 --cropleft 0 --cropright 0 --pp default,tmpnoise:5:5:5 --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'toomuchworkforfunnysplash.mp4', (4.1 MB)
+Converting: 'scarlet.mp4', (6.1 MB)
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:33:06 AM
+
+ffmpeg2theora options: 
+ --videobitrate 1280 --width 1280 --height 720 --framerate 3 --croptop 0 --cropbottom 0 --cropleft 0 --cropright 0 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'scarlet.mp4', (6.1 MB)
+Converting: 'toomuchworkforfunnysplash.mp4', (4.1 MB)
+Completed:  'scarlet.ogv', (1.2 MB) in .1 minutes.
+Completed:  'toomuchworkforfunnysplash.ogv', (.6 MB) in .1 minutes.
+Finished processing all files at 2/11/2024 8:33 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:33:51 AM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 1280 --height 720 --framerate 3 --croptop 0 --cropbottom 0 --cropleft 0 --cropright 0 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'scarlet.mp4', (6.1 MB)
+Converting: 'toomuchworkforfunnysplash.mp4', (4.1 MB)
+Completed:  'scarlet.ogv', (.3 MB) in .1 minutes.
+Completed:  'toomuchworkforfunnysplash.ogv', (.4 MB) in .1 minutes.
+Finished processing all files at 2/11/2024 8:33 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:34:26 AM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 1280 --height 720 --framerate 30 --croptop 0 --cropbottom 0 --cropleft 0 --cropright 0 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'scarlet.mp4', (6.1 MB)
+Converting: 'toomuchworkforfunnysplash.mp4', (4.1 MB)
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:38:15 AM
+
+ffmpeg2theora options: 
+ --videobitrate 128 --width 1280 --height 720 --framerate 30 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'LogoREFG.mp4', (4.1 MB)
+Completed:  'LogoREFG.ogv', (.4 MB) in .7 minutes.
+Finished processing all files at 2/11/2024 8:38 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:45:44 AM
+
+ffmpeg2theora options: 
+ --videobitrate 3500 --width 1280 --height 720 --framerate 30 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'LogoREFG.mp4', (4.1 MB)
+Completed:  'LogoREFG.ogv', (2.2 MB) in .8 minutes.
+Finished processing all files at 2/11/2024 8:46 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 8:53:56 AM
+
+ffmpeg2theora options: 
+ --videobitrate 3500 --width 1280 --height 720 --framerate 30 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'Scarlet.mp4', (6.1 MB)
+Completed:  'Scarlet.ogv', (2.9 MB) in .6 minutes.
+Finished processing all files at 2/11/2024 8:54 AM
+----------------------------------------------------------------------------
+Theora Converter .NET
+Sunday, February 11, 2024 9:18:58 AM
+
+ffmpeg2theora options: 
+ --videobitrate 3500 --width 1280 --height 720 --framerate 30 --pp default --audiobitrate 128 --samplerate 48000 --two-pass --soft-target --contact "http://sourceforge.net/projects/theoraconverter"
+Output Folder: C:\Users\romeo\Documents\GitHub\Virtua-Scarlet\videos
+Converting: 'disclaimer.mp4', (1 MB)
+Completed:  'disclaimer.ogv', (.6 MB) in .1 minutes.
+Finished processing all files at 2/11/2024 9:19 AM

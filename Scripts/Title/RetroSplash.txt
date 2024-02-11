@@ -28,6 +28,7 @@ event ObjectUpdate
 	switch object.state
 	case SCARLETLOGO_INITIALISE
 		LoadPalette("RetroLogo.act", 0, 0, 0, 256)
+		LoadVideo("disclaimer")
 		object.state = SCARLETLOGO_FADEFROMBLACK
 		object.timer = 256
 		SetScreenFade(0x00, 0x00, 0x00, 0xFF)
