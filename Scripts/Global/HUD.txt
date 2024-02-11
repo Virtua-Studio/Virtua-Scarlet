@@ -579,7 +579,7 @@ event ObjectStartup
 	
 	// A-F digits are unused
 	
-	SpriteFrame(0, 0, 46, 49, 248, 147) 	// #10 - Score, Time, Rings HUD text
+	SpriteFrame(0, 0, 42, 52, 248, 147) 	// #10 - Score, Time, Rings HUD text
 	SpriteFrame(0, 0, 31, 11, 1, 119) 	// #11 - Red Time text
 	SpriteFrame(0, 0, 39, 11, 1, 131) 	// #12 - Red Rings text
 	SpriteFrame(0, 0, 29, 4, 1, 45) 	// #13 - Timer ticks
